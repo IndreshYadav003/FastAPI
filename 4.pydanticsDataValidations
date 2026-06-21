@@ -1,0 +1,45 @@
+from pydantic import BaseModel, EmailStr, AnyUrl, Field
+from typing import List, Dict, Optional ,Annotated
+
+
+class Patient(BaseModel):
+    # All fields are required by default
+    name: str =Annotated[str,Field(max_digits=90,title="name of patient",description='give the name',examples="Indresh")]                  #Field(min_length=500)
+    email: EmailStr #pip install email-validator   custom data typed
+    linkedin_url: AnyUrl # custom data types
+    age: float=Field(gt=0)
+    weight: float=Field(gt=43)
+    married: bool
+    allergies: Optional[List[str]] = None
+    contact_details: Dict[str, str]
+
+
+def insert_patients_data(patient: Patient):
+    print("Name:", patient.name)
+    print("Email:", patient.email)
+    print("LinkedIn:", patient.linkedin_url)
+    print("Age:", patient.age)
+    print("Weight:", patient.weight)
+    print("Married:", patient.married)
+    print("Allergies:", patient.allergies)
+    print("Contact Details:", patient.contact_details)
+    print("Inserted data successfully.")
+
+
+patients_info = {
+    "name": "Indresh",
+    "email": "abc@gmail.com",
+    "linkedin_url": "https://www.linkedin.com/in/indresh",
+    "age": 22,
+    "weight": 300.0,
+    "married": True,
+    "allergies": ["pollen", "dust", "water"],
+    "contact_details": {
+        "email": "abc@gmail.com",
+        "phone_number": "232323"
+    }
+}
+
+patient1 = Patient(**patients_info)
+
+insert_patients_data(patient1)
