@@ -1,0 +1,47 @@
+from fastapi import FastAPI, HTTPException, Query
+import json
+app = FastAPI()
+# Load data from JSON file
+def load_data():
+    with open("patients.json", "r") as file:
+        return json.load(file)
+@app.get("/")
+def home():
+    return {"message": "Patient Management API"}
+# Sorting using Query Parameters
+@app.get("/sort")
+def sort_patients(
+    sort_by: str = Query(
+        ...,
+        description="Field to sort by (Age, Gender, Heart_Rate)"
+    ),
+    order: str = Query(
+        "asc",
+        description="Sorting order: asc or desc"
+    )
+):
+    valid_fields = ["Age", "Gender", "Heart_Rate"]
+
+    if sort_by not in valid_fields:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid field. Choose from {valid_fields}"
+        )
+
+    if order not in ["asc", "desc"]:
+        raise HTTPException(
+            status_code=400,
+            detail="Order must be 'asc' or 'desc'"
+        )
+
+    data = load_data()
+
+    reverse = True if order == "desc" else False
+
+    sorted_data = sorted(
+        data,
+        key=lambda x: x.get(sort_by),
+        reverse=reverse
+    )
+
+    return sorted_data
