@@ -1,0 +1,52 @@
+from pydantic import BaseModel, EmailStr, field_validator
+from typing import List, Dict, Optional
+
+
+class Patient(BaseModel):
+    # All fields are required by default
+    name: str
+    email: EmailStr
+    age: int
+    weight: float
+    married: bool
+    allergies: Optional[List[str]] = None
+    contact_details: Dict[str, str]
+
+    @field_validator("email")# two types after and befor
+    @classmethod
+    def email_validator(cls, value):
+        valid_domains = ["hdfc.com", "icici.com"]
+
+        # Extract domain name
+        domain_name = value.split("@")[-1]
+
+        if domain_name not in valid_domains:
+            raise ValueError("Not a valid domain")
+
+        return value
+
+
+def insert_patients_data(patient: Patient):
+    print("Name:", patient.name)
+    print("Email:", patient.email)
+    print("Age:", patient.age)
+    print("Weight:", patient.weight)
+    print("Inserted data successfully.")
+
+
+patients_info = {
+    "name": "Indresh",
+    "email": "abc@hdfc.com",
+    "age": 22,
+    "weight": 300,
+    "married": True,
+    "allergies": ["pollen", "dust", "water"],
+    "contact_details": {
+        "email": "abc@hdfc.com",
+        "phone_number": "232323"
+    }
+}
+
+patient1 = Patient(**patients_info)
+
+insert_patients_data(patient1)
