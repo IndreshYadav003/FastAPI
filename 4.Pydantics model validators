@@ -1,0 +1,45 @@
+from pydantic import BaseModel, model_validator
+from typing import List, Dict, Optional
+
+
+class Patient(BaseModel):
+    # All fields are required by default
+    name: str
+    age: int
+    weight: float
+    married: bool
+    allergies: Optional[List[str]] = None
+    contact_details: Dict[str, str]
+
+    @model_validator(mode="after")
+    def validate_emergency_contact(self):
+        if self.age > 60 and "emergency" not in self.contact_details:
+            raise ValueError(
+                "Patients older than 60 must have an emergency contact."
+            )
+        return self
+
+
+def insert_patients_data(patient: Patient):
+    print("Name:", patient.name)
+    print("Age:", patient.age)
+    print("Weight:", patient.weight)
+    print("Inserted data successfully.")
+
+
+patients_info = {
+    "name": "Indresh",
+    "age": 34,
+    "weight": 300,
+    "married": True,
+    "allergies": ["pollen", "dust", "water"],
+    "contact_details": {
+        "email": "abc@gmail.com",
+        "phone_number": "232323",
+        "emergency": "1344331"
+    }
+}
+
+patient1 = Patient(**patients_info)
+
+insert_patients_data(patient1)
