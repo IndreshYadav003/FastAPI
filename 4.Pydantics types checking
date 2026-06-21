@@ -1,0 +1,33 @@
+# Step 1 pip install pydantic
+# Step 2 pip show pydantic
+# step 3 run
+from pydantic import BaseModel
+from  typing import List ,Dict, Optional
+class Patient(BaseModel):#all field by default required
+    name: str
+    age: int
+    weight: float
+    married: bool
+    allergies :Optional[List[str]] =None# default value is none
+    contact_datials: Dict[str,str]
+
+def insert_patients_data(patient: Patient):
+    print("Name:", patient.name)
+    print("Age:", patient.age)
+    print("weight",patient.weight)
+    print("Inserted data successfully.")
+
+
+patients_info = {
+    "name": "Indresh",
+    "age": 22,
+    "weight":300,
+    "married":True,
+    'allergies':["poll",'dust','water'],
+    'contact_datials':{'emai':"abc@gmail.com",
+                       "phonenumber":"232323"}
+}
+
+patient1 = Patient(**patients_info)
+
+insert_patients_data(patient1)
