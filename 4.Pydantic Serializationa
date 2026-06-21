@@ -1,0 +1,42 @@
+from pydantic import BaseModel
+
+
+class Address(BaseModel):
+    city: str
+    state: str
+    pin: str
+
+
+class Patient(BaseModel):
+    name: str
+    gender: str
+    age: int
+    address: Address
+
+
+# Address data
+address_dict = {
+    "city": "Basti",
+    "state": "UP",
+    "pin": "3232"
+}
+
+# Create Address object
+address1 = Address(**address_dict)
+
+# Patient data
+patient_dict = {
+    "name": "Indresh",
+    "gender": "Male",
+    "age": 22,
+    "address": address1
+}
+
+# Create Patient object
+patient1 = Patient(**patient_dict)
+
+print(patient1)
+temp=patient1.model_dump()# dict
+temp1=patient1.model_dump_json()# json  we use include and exclude methods
+print(temp)
+print(temp1)
