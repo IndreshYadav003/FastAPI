@@ -1,0 +1,29 @@
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def hi():
+    return {"message": "This is API basic code"}
+
+@app.get("/about")
+def about():
+    return {"message": "This is the About feature"}
+
+@app.get("/name/{id}")
+def get_name(id: int):
+    return {
+        "id": id,
+        "message": f"Your ID is {id}"
+    }
+'''
+http://127.0.0.1:8000/about
+http://127.0.0.1:8000/name/101
+{
+  "id": 101,
+  "message": "Your ID is 101"
+}
+
+
+'''
+    
