@@ -1,0 +1,29 @@
+[
+  {
+    "Patient_ID": 1,
+    "Age": 58,
+    "Gender": "Male",
+    "Blood_Pressure": 135,
+    "Blood_Sugar": 180,
+    "Heart_Rate": 78,
+    "Diagnosis": "Diabetes"
+  },
+  {
+    "Patient_ID": 2,
+    "Age": 42,
+    "Gender": "Female",
+    "Blood_Pressure": 120,
+    "Blood_Sugar": 95,
+    "Heart_Rate": 72,
+    "Diagnosis": "Healthy"
+  },
+  {
+    "Patient_ID": 3,
+    "Age": 67,
+    "Gender": "Male",
+    "Blood_Pressure": 160,
+    "Blood_Sugar": 210,
+    "Heart_Rate": 88,
+    "Diagnosis": "Hypertension"
+  }
+]
