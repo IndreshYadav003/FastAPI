@@ -1,0 +1,46 @@
+from pydantic import BaseModel, computed_field
+from typing import List, Dict, Optional
+
+
+class Patient(BaseModel):
+    # All fields are required by default
+    name: str
+    age: int
+    weight: float      # kg
+    height: float      # meters
+    married: bool
+    allergies: Optional[List[str]] = None
+    contact_details: Dict[str, str]
+
+    @computed_field
+    @property
+    def calculate_bmi(self) -> float:
+        bmi = self.weight / (self.height ** 2)
+        return round(bmi, 2)
+
+
+def insert_patients_data(patient: Patient):
+    print("Name:", patient.name)
+    print("Age:", patient.age)
+    print("Weight:", patient.weight)
+    print("Height:", patient.height)
+    print("BMI:", patient.calculate_bmi)
+    print("Inserted data successfully.")
+
+
+patients_info = {
+    "name": "Indresh",
+    "age": 22,
+    "weight": 300,
+    "height": 4.5,
+    "married": True,
+    "allergies": ["pollen", "dust", "water"],
+    "contact_details": {
+        "email": "abc@gmail.com",
+        "phone_number": "232323"
+    }
+}
+
+patient1 = Patient(**patients_info)
+
+insert_patients_data(patient1)
